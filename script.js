@@ -1,9 +1,124 @@
 /**
  * Pets Care Medical — Interactive Homepage Script
  * High performance, accessible, zero external dependencies
+ * Premium 26-Point Animation & Micro-interaction System
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // --- 0. Page Load Experience (Preloader & Hero Cinematic Unveiling) ---
+  const sitePreloader = document.getElementById('sitePreloader');
+  const hasVisited = sessionStorage.getItem('pcm_visited');
+
+  const unveilHero = () => {
+    document.body.classList.add('hero-loaded');
+  };
+
+  if (sitePreloader) {
+    if (hasVisited) {
+      // Rapid 180ms transition for internal multi-page browsing
+      setTimeout(() => {
+        sitePreloader.classList.add('fade-out');
+        unveilHero();
+        setTimeout(() => {
+          sitePreloader.style.display = 'none';
+        }, 500);
+      }, 180);
+    } else {
+      // Full cinematic opening experience (1.1s - 1.2s)
+      setTimeout(() => {
+        sitePreloader.classList.add('fade-out');
+        unveilHero();
+        sessionStorage.setItem('pcm_visited', 'true');
+        setTimeout(() => {
+          sitePreloader.style.display = 'none';
+        }, 600);
+      }, 1150);
+    }
+  } else {
+    unveilHero();
+  }
+
+  // --- 0.1 Scroll Progress Bar Indicator ---
+  const scrollProgressBar = document.getElementById('scrollProgressBar');
+  if (scrollProgressBar) {
+    let tickingProgress = false;
+    const updateProgress = () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight > 0) {
+        const scrolled = (window.scrollY / docHeight) * 100;
+        scrollProgressBar.style.width = `${Math.min(100, Math.max(0, scrolled))}%`;
+      }
+      tickingProgress = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!tickingProgress) {
+        window.requestAnimationFrame(updateProgress);
+        tickingProgress = true;
+      }
+    }, { passive: true });
+    updateProgress();
+  }
+
+  // --- 0.2 Subtle Luxury Desktop Cursor ---
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  if (cursorDot && cursorRing && isFinePointer) {
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+    let cursorVisible = false;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!cursorVisible) {
+        cursorVisible = true;
+        cursorDot.classList.add('cursor-visible');
+        cursorRing.classList.add('cursor-visible');
+      }
+      cursorDot.style.left = `${mouseX}px`;
+      cursorDot.style.top = `${mouseY}px`;
+    }, { passive: true });
+
+    const renderCursorRing = () => {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      cursorRing.style.left = `${ringX}px`;
+      cursorRing.style.top = `${ringY}px`;
+      requestAnimationFrame(renderCursorRing);
+    };
+    requestAnimationFrame(renderCursorRing);
+
+    const bindCursorHover = () => {
+      const interactiveEls = document.querySelectorAll('a, button, [role="button"], input, select, textarea, .service-card, .insta-post-card, .store-product-card, .faq-question, .dept-gallery-photo, .filter-btn, .mobile-action-btn');
+      interactiveEls.forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
+      });
+    };
+    bindCursorHover();
+
+    window.addEventListener('mousedown', () => cursorDot.classList.add('cursor-active'));
+    window.addEventListener('mouseup', () => cursorDot.classList.remove('cursor-active'));
+
+    document.addEventListener('mouseleave', () => {
+      cursorDot.classList.remove('cursor-visible');
+      cursorRing.classList.remove('cursor-visible');
+      cursorVisible = false;
+    });
+  }
+
+  // --- 0.3 Mobile Action Bar Entrance ---
+  const mobileActionBar = document.querySelector('.mobile-action-bar');
+  if (mobileActionBar) {
+    setTimeout(() => {
+      mobileActionBar.classList.add('bar-visible');
+    }, 800);
+  }
+
   // --- 1. Sticky Navigation Scroll Effect ---
   const siteHeader = document.querySelector('.site-header');
   const handleScroll = () => {
@@ -24,20 +139,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
   const openDrawer = () => {
-    hamburgerBtn.setAttribute('aria-expanded', 'true');
-    mobileNavDrawer.classList.add('open');
-    mobileNavBackdrop.classList.add('open');
+    if (hamburgerBtn) {
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+      hamburgerBtn.classList.add('open');
+    }
+    if (mobileNavDrawer) mobileNavDrawer.classList.add('open');
+    if (mobileNavBackdrop) mobileNavBackdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
   };
 
   const closeDrawer = () => {
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-    mobileNavDrawer.classList.remove('open');
-    mobileNavBackdrop.classList.remove('open');
+    if (hamburgerBtn) {
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      hamburgerBtn.classList.remove('open');
+    }
+    if (mobileNavDrawer) mobileNavDrawer.classList.remove('open');
+    if (mobileNavBackdrop) mobileNavBackdrop.classList.remove('open');
     document.body.style.overflow = '';
   };
 
-  if (hamburgerBtn) hamburgerBtn.addEventListener('click', openDrawer);
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', () => {
+      const isExpanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        closeDrawer();
+      } else {
+        openDrawer();
+      }
+    });
+  }
   if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
   if (mobileNavBackdrop) mobileNavBackdrop.addEventListener('click', closeDrawer);
 
@@ -182,18 +312,57 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- 5. Scroll Reveal Animations ---
-  const animatedElements = document.querySelectorAll('.fade-in-up');
+  // --- 5. Scroll Reveal Animations & Animated Counters ---
+  const animatedElements = document.querySelectorAll('.fade-in-up, .reveal-left, .reveal-right, .reveal-scale, .stagger-grid');
+  
+  const animateCounter = (el) => {
+    const rawVal = el.getAttribute('data-count-to');
+    if (!rawVal) return;
+    const target = parseFloat(rawVal);
+    const isDecimal = rawVal.includes('.');
+    const suffix = el.getAttribute('data-count-suffix') || '';
+    const duration = 1200;
+    const startTime = performance.now();
+
+    const updateCount = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentVal = target * easeProgress;
+
+      el.textContent = isDecimal 
+        ? currentVal.toFixed(1) + suffix 
+        : Math.floor(currentVal) + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(updateCount);
+      } else {
+        el.textContent = (isDecimal ? target.toFixed(1) : target) + suffix;
+      }
+    };
+    requestAnimationFrame(updateCount);
+  };
+
   if ('IntersectionObserver' in window) {
     const appearOptions = {
-      threshold: 0.12,
-      rootMargin: "0px 0px -40px 0px"
+      threshold: 0.15,
+      rootMargin: "0px 0px -30px 0px"
     };
 
     const appearOnScroll = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
+          
+          if (entry.target.hasAttribute('data-count-to')) {
+            animateCounter(entry.target);
+          }
+          if (entry.target.querySelectorAll) {
+            entry.target.querySelectorAll('[data-count-to]').forEach(counter => {
+              animateCounter(counter);
+            });
+          }
+
           observer.unobserve(entry.target);
         }
       });
@@ -203,7 +372,36 @@ document.addEventListener('DOMContentLoaded', () => {
       appearOnScroll.observe(el);
     });
   } else {
-    animatedElements.forEach(el => el.classList.add('in-view'));
+    animatedElements.forEach(el => {
+      el.classList.add('in-view');
+      if (el.hasAttribute('data-count-to')) {
+        animateCounter(el);
+      }
+    });
+  }
+
+  // --- 5.1 Subtle Desktop Image Parallax on Scroll ---
+  const parallaxTargets = document.querySelectorAll('.hero-image-frame img, .parallax-target');
+  if (parallaxTargets.length && window.innerWidth >= 992) {
+    let tickingParallax = false;
+    const updateParallax = () => {
+      parallaxTargets.forEach(img => {
+        const rect = img.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const depth = 0.04;
+          const offset = Math.max(-16, Math.min(16, (rect.top - window.innerHeight / 2) * depth));
+          img.style.transform = `scale(1.02) translateY(${offset}px)`;
+        }
+      });
+      tickingParallax = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!tickingParallax) {
+        window.requestAnimationFrame(updateParallax);
+        tickingParallax = true;
+      }
+    }, { passive: true });
   }
 
   // --- 6. Active Navigation Highlighting ---

@@ -56,6 +56,7 @@
   --radius-full: 9999px;
 
   /* Transitions */
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
   --transition-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-normal: 280ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 480ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -3970,4 +3971,622 @@ p.lead {
   font-size: 0.78rem;
   font-weight: 600;
 }
+
+/* ==========================================================================
+   PREMIUM WEBSITE ANIMATION SYSTEM (26-POINT SPECIFICATION)
+   Cinematic, Subtle, GPU-Accelerated & Accessible
+   ========================================================================== */
+
+/* 1. Page Load Preloader */
+.site-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background-color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.5s var(--ease-cinematic), visibility 0.5s;
+  pointer-events: auto;
+}
+
+.site-preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  max-width: 320px;
+  padding: 20px;
+}
+
+.preloader-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  animation: preloaderLogoIn 0.8s var(--ease-cinematic) 0.1s forwards;
+}
+
+.preloader-symbol {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, var(--color-primary), #1b4d3a);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  box-shadow: 0 6px 20px rgba(18, 55, 42, 0.22);
+}
+
+.preloader-brand {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  color: var(--color-primary);
+  letter-spacing: -0.01em;
+}
+
+.preloader-sub {
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent-dark);
+}
+
+.preloader-track {
+  width: 170px;
+  height: 2.5px;
+  background: rgba(18, 55, 42, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preloader-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+  border-radius: 99px;
+  animation: preloaderLineFill 1.05s var(--ease-cinematic) 0.15s forwards;
+}
+
+@keyframes preloaderLogoIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes preloaderLineFill {
+  0% { width: 0%; }
+  60% { width: 75%; }
+  100% { width: 100%; }
+}
+
+/* 2. Scroll Progress Bar Indicator */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-accent) 0%, #1E4F3D 60%, var(--color-accent) 100%);
+  z-index: 100001;
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+
+/* 3. Subtle Luxury Desktop Cursor */
+@media (hover: hover) and (pointer: fine) {
+  .custom-cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-accent-dark);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999999;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-cinematic), transform 0.15s ease-out;
+    will-change: transform, left, top;
+  }
+
+  .custom-cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid rgba(200, 155, 91, 0.55);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999998;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width 0.28s var(--ease-cinematic), height 0.28s var(--ease-cinematic), background-color 0.28s var(--ease-cinematic), border-color 0.28s, opacity 0.3s;
+    will-change: transform, left, top;
+  }
+
+  .custom-cursor-dot.cursor-visible,
+  .custom-cursor-ring.cursor-visible {
+    opacity: 1;
+  }
+
+  .custom-cursor-ring.cursor-hover {
+    width: 52px;
+    height: 52px;
+    border-color: var(--color-accent);
+    background-color: rgba(200, 155, 91, 0.14);
+  }
+
+  .custom-cursor-dot.cursor-active {
+    transform: translate(-50%, -50%) scale(0.65);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* 4. Header Dynamics */
+.site-header {
+  transition: background-color 0.4s var(--ease-cinematic), box-shadow 0.4s var(--ease-cinematic), backdrop-filter 0.4s !important;
+}
+
+.site-header.scrolled {
+  background-color: rgba(248, 245, 238, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 24px rgba(18, 55, 42, 0.08) !important;
+}
+
+.nav-desktop .nav-link {
+  position: relative;
+  transition: color 0.3s var(--ease-cinematic);
+}
+
+.nav-desktop .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+  transition: width 0.32s var(--ease-cinematic);
+}
+
+.nav-desktop .nav-link:hover::after,
+.nav-desktop .nav-link.active::after {
+  width: 100%;
+}
+
+.header-cta-btn {
+  transition: transform 0.25s var(--ease-cinematic), box-shadow 0.25s var(--ease-cinematic), background-color 0.25s !important;
+}
+
+.header-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(18, 55, 42, 0.22);
+}
+
+/* 5. Hero Cinematic Line-by-Line & Image Reveal */
+.hero-line-wrap {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-line {
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  transition: transform 0.85s var(--ease-cinematic), opacity 0.85s var(--ease-cinematic);
+}
+
+.hero-loaded .hero-line-wrap:nth-child(1) .hero-line {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.1s;
+}
+
+.hero-loaded .hero-line-wrap:nth-child(2) .hero-line {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.22s;
+}
+
+.hero-description {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease-cinematic) 0.35s, transform 0.8s var(--ease-cinematic) 0.35s;
+}
+
+.hero-ctas {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease-cinematic) 0.48s, transform 0.8s var(--ease-cinematic) 0.48s;
+}
+
+.trust-row {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-cinematic) 0.62s, transform 0.8s var(--ease-cinematic) 0.62s;
+}
+
+.hero-loaded .hero-description,
+.hero-loaded .hero-ctas,
+.hero-loaded .trust-row {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero Image Cinematic Reveal */
+.hero-image-frame {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.2s var(--ease-cinematic) 0.15s !important;
+}
+
+.hero-loaded .hero-image-frame {
+  clip-path: inset(0 0 0% 0) !important;
+}
+
+.hero-image-frame img {
+  transform: scale(1.05);
+  transition: transform 9s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.hero-loaded .hero-image-frame img {
+  transform: scale(1.00);
+}
+
+/* 6. Universal Scroll Reveal System */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-cinematic), transform 0.8s var(--ease-cinematic);
+  will-change: transform, opacity;
+}
+
+.fade-in-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.85s var(--ease-cinematic), transform 0.85s var(--ease-cinematic);
+  will-change: transform, opacity;
+}
+
+.reveal-left.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.85s var(--ease-cinematic), transform 0.85s var(--ease-cinematic);
+  will-change: transform, opacity;
+}
+
+.reveal-right.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.85s var(--ease-cinematic), transform 0.85s var(--ease-cinematic);
+  will-change: transform, opacity;
+}
+
+.reveal-scale.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger Cascades */
+.stagger-grid.in-view > *:nth-child(1), .stagger-delay-1.in-view { transition-delay: 0.05s; }
+.stagger-grid.in-view > *:nth-child(2), .stagger-delay-2.in-view { transition-delay: 0.12s; }
+.stagger-grid.in-view > *:nth-child(3), .stagger-delay-3.in-view { transition-delay: 0.19s; }
+.stagger-grid.in-view > *:nth-child(4), .stagger-delay-4.in-view { transition-delay: 0.26s; }
+.stagger-grid.in-view > *:nth-child(5), .stagger-delay-5.in-view { transition-delay: 0.33s; }
+.stagger-grid.in-view > *:nth-child(6), .stagger-delay-6.in-view { transition-delay: 0.40s; }
+.stagger-grid.in-view > *:nth-child(7), .stagger-delay-7.in-view { transition-delay: 0.47s; }
+.stagger-grid.in-view > *:nth-child(8), .stagger-delay-8.in-view { transition-delay: 0.54s; }
+
+/* 7. Service Cards Polish */
+.service-card {
+  transition: transform 0.35s var(--ease-cinematic), box-shadow 0.35s var(--ease-cinematic), border-color 0.35s var(--ease-cinematic) !important;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 16px 36px rgba(18, 55, 42, 0.12) !important;
+  border-color: rgba(200, 155, 91, 0.4) !important;
+}
+
+.service-card .card-media img {
+  transition: transform 0.6s var(--ease-cinematic) !important;
+}
+
+.service-card:hover .card-media img {
+  transform: scale(1.04) !important;
+}
+
+.service-card .card-cta svg,
+.service-card .card-arrow {
+  transition: transform 0.3s var(--ease-cinematic) !important;
+}
+
+.service-card:hover .card-cta svg,
+.service-card:hover .card-arrow {
+  transform: translateX(5px) !important;
+}
+
+/* 8. Large Photography Cinematic Hover */
+.editorial-photo,
+.dept-gallery-photo,
+.insta-post-card,
+.store-product-card {
+  transition: transform 0.35s var(--ease-cinematic), box-shadow 0.35s var(--ease-cinematic), border-color 0.35s;
+}
+
+.editorial-photo img,
+.dept-gallery-photo img,
+.insta-post-card img,
+.store-product-card img {
+  transition: transform 0.6s var(--ease-cinematic);
+}
+
+.editorial-photo:hover img,
+.dept-gallery-photo:hover img,
+.insta-post-card:hover img {
+  transform: scale(1.04);
+}
+
+.store-product-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(200, 155, 91, 0.45);
+  box-shadow: var(--shadow-md);
+}
+
+/* 9. Floating Badges Micro-movement */
+@keyframes floatSlowBadge {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes floatSlowBadgeAlt {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.badge-bottom-left {
+  animation: floatSlowBadge 5.5s ease-in-out infinite;
+}
+
+.badge-top-right {
+  animation: floatSlowBadgeAlt 6s ease-in-out infinite;
+}
+
+/* 10. Local SEO & Trust Badges Subtle Ambient Glow */
+@keyframes goldAmbientGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(200, 155, 91, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 14px 2px rgba(200, 155, 91, 0.4);
+  }
+}
+
+.local-trust-highlight,
+.seo-trust-badge {
+  animation: goldAmbientGlow 4.5s ease-in-out infinite;
+}
+
+/* 11. Final CTA Ambient Gradient & Button Pulse */
+.final-cta-section {
+  background: 
+    linear-gradient(135deg, rgba(10, 32, 24, 0.95) 0%, rgba(18, 55, 42, 0.92) 50%, rgba(14, 40, 30, 0.96) 100%),
+    url('assets/real/real_02.jpg') center center / cover no-repeat;
+  background-size: 110% 110%;
+  animation: ambientBgDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBgDrift {
+  0% { background-position: center top; }
+  100% { background-position: center bottom; }
+}
+
+@keyframes emergencyPulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(200, 155, 91, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(200, 155, 91, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(200, 155, 91, 0);
+  }
+}
+
+.btn-emergency-pulse {
+  animation: emergencyPulseRing 2.6s infinite;
+}
+
+/* 12. Button Micro-interactions */
+.btn {
+  transition: transform 0.25s var(--ease-cinematic), box-shadow 0.25s var(--ease-cinematic), background-color 0.25s !important;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.97) translateY(0);
+}
+
+.btn svg {
+  transition: transform 0.25s var(--ease-cinematic);
+}
+
+.btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* 13. Mobile Bottom Sticky Bar Slide-in */
+.mobile-action-bar {
+  transform: translateY(105%) !important;
+  transition: transform 0.5s var(--ease-cinematic) !important;
+  will-change: transform;
+}
+
+.mobile-action-bar.bar-visible {
+  transform: translateY(0) !important;
+}
+
+.mobile-action-btn:active {
+  transform: scale(0.94);
+}
+
+/* 14. Mobile Drawer & Hamburger Transitions */
+.hamburger-line {
+  transition: transform 0.35s var(--ease-cinematic), opacity 0.25s, width 0.3s !important;
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(1),
+.hamburger-btn[aria-expanded="true"] .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(2),
+.hamburger-btn[aria-expanded="true"] .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger-btn.open .hamburger-line:nth-child(3),
+.hamburger-btn[aria-expanded="true"] .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-nav-drawer {
+  transform: translateX(100%);
+  transition: transform 0.45s var(--ease-cinematic) !important;
+  will-change: transform;
+}
+
+.mobile-nav-drawer.open {
+  transform: translateX(0) !important;
+}
+
+.mobile-nav-drawer.open .mobile-nav-link {
+  animation: mobileLinkCascade 0.38s var(--ease-cinematic) backwards;
+}
+
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(1) { animation-delay: 0.05s; }
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(2) { animation-delay: 0.10s; }
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(3) { animation-delay: 0.15s; }
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(4) { animation-delay: 0.20s; }
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(5) { animation-delay: 0.25s; }
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(6) { animation-delay: 0.30s; }
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(7) { animation-delay: 0.35s; }
+.mobile-nav-drawer.open .mobile-nav-link:nth-child(8) { animation-delay: 0.40s; }
+
+@keyframes mobileLinkCascade {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 15. Reviews Star Pop Animation */
+.in-view .star-pop {
+  animation: starPopEffect 0.5s var(--ease-cinematic) backwards;
+}
+
+@keyframes starPopEffect {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 16. Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .site-preloader {
+    display: none !important;
+  }
+  
+  .fade-in-up,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale,
+  .hero-line,
+  .hero-description,
+  .hero-ctas,
+  .trust-row,
+  .hero-image-frame {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+
 

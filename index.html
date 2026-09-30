@@ -126,6 +126,32 @@
   </script>
 </head>
 <body>
+  <!-- Scroll Progress Bar Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
+
+  <!-- Subtle Luxury Desktop Cursor -->
+  <div class="custom-cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="custom-cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- Site Preloader -->
+  <div class="site-preloader" id="sitePreloader" aria-hidden="true">
+    <div class="preloader-content">
+      <div class="preloader-logo">
+        <div class="preloader-symbol">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 4v16M4 12h16"></path>
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+          </svg>
+        </div>
+        <div class="preloader-brand">Pets Care Medical</div>
+        <div class="preloader-sub">Lalpur, Ranchi &bull; 24/7 Care</div>
+      </div>
+      <div class="preloader-track">
+        <div class="preloader-bar"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Accessibility: Skip to Content -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -260,7 +286,8 @@
           </div>
           
           <h1 class="hero-headline" id="heroHeadline">
-            Complete Care for <em>Your Best Friend.</em>
+            <span class="hero-line-wrap"><span class="hero-line">Complete Care for</span></span>
+            <span class="hero-line-wrap"><span class="hero-line"><em>Your Best Friend.</em></span></span>
           </h1>
           
           <p class="hero-description">
@@ -281,11 +308,11 @@
           <!-- Trust Row -->
           <div class="trust-row">
             <div class="trust-item">
-              <div class="trust-rating-val">4.9</div>
+              <div class="trust-rating-val" data-count-to="4.9">4.9</div>
               <div class="trust-rating-stars" aria-label="4.9 out of 5 stars">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                <span class="star-pop">★</span><span class="star-pop">★</span><span class="star-pop">★</span><span class="star-pop">★</span><span class="star-pop">★</span>
               </div>
-              <div class="trust-label">97+ Google Reviews</div>
+              <div class="trust-label"><span data-count-to="97" data-count-suffix="+">97+</span> Google Reviews</div>
             </div>
 
             <div class="trust-badge-pill">
@@ -373,7 +400,7 @@
         <p>From routine healthcare to grooming and everyday essentials, Pets Care Medical makes pet care simple and convenient.</p>
       </div>
 
-      <div class="services-grid">
+      <div class="services-grid stagger-grid">
         <!-- CARD 1: Veterinary Care -->
         <article class="service-card fade-in-up">
           <div class="service-card-media">
@@ -478,7 +505,7 @@
     <div class="container">
       <div class="why-grid">
         <!-- Left: Real Photo of Local Pet Parents -->
-        <div class="why-image-column fade-in-up">
+        <div class="why-image-column reveal-left">
           <div class="why-image-frame">
             <img 
               src="assets/real/real_25.jpg" 
@@ -489,13 +516,13 @@
             >
           </div>
           <div class="why-badge-experience">
-            <div class="badge-exp-number">24/7</div>
+            <div class="badge-exp-number" data-count-to="24" data-count-suffix="/7">24/7</div>
             <div class="badge-exp-text">Always Open in Lalpur</div>
           </div>
         </div>
 
         <!-- Right: Editorial Narrative & 4 Numbered Points -->
-        <div class="why-content-column fade-in-up">
+        <div class="why-content-column reveal-right">
           <span class="section-tag">Dedicated Standards</span>
           <h2 id="whyTitle">Care That Goes Beyond the Clinic</h2>
           <p class="why-lead-text">
@@ -922,16 +949,16 @@
       <!-- Overall Google Rating Badge -->
       <div class="reviews-stat-banner fade-in-up">
         <div class="rating-score-display">
-          <span class="score-num">4.9</span>
-          <div class="score-stars">★★★★★</div>
+          <span class="score-num" data-count-to="4.9">4.9</span>
+          <div class="score-stars"><span class="star-pop">★</span><span class="star-pop">★</span><span class="star-pop">★</span><span class="star-pop">★</span><span class="star-pop">★</span></div>
         </div>
         <div class="score-meta">
-          <strong>4.9 Google Rating</strong> &nbsp;•&nbsp; Based on 97 Reviews
+          <strong>4.9 Google Rating</strong> &nbsp;•&nbsp; Based on <span data-count-to="97">97</span> Reviews
         </div>
       </div>
 
       <!-- 3 Genuine Google Review Cards -->
-      <div class="reviews-grid">
+      <div class="reviews-grid stagger-grid">
         <!-- Review 1 -->
         <article class="review-card fade-in-up">
           <div class="review-header">
@@ -1396,7 +1423,7 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="location-actions-grid">
+          <div class="location-actions-grid stagger-grid">
             <a href="https://www.google.com/maps/dir/?api=1&destination=Pets+Care+Medical,+Hazaribagh+Road,+opposite+Shreelather,+Lalpur,+Ranchi,+Jharkhand+834001" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
               <span>Get Directions</span>
@@ -1413,7 +1440,7 @@
         </div>
 
         <!-- Interactive Google Maps Frame -->
-        <div class="location-map-card fade-in-up">
+        <div class="location-map-card reveal-scale">
           <iframe 
             title="Pets Care Medical Location Map in Lalpur Ranchi"
             src="https://maps.google.com/maps?q=Pets%20Care%20Medical%20Hazaribagh%20Road%20Lalpur%20Ranchi%20Jharkhand&t=&z=16&ie=UTF8&iwloc=&output=embed" 
@@ -1436,7 +1463,7 @@
         <p>Whether it's healthcare, grooming or everyday essentials, we're here to make pet care easier.</p>
         
         <div class="final-cta-buttons">
-          <button type="button" class="btn btn-gold btn-lg" data-open-modal="booking">
+          <button type="button" class="btn btn-gold btn-lg btn-emergency-pulse" data-open-modal="booking">
             <span>Book an Appointment</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
